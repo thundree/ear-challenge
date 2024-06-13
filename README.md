@@ -35,7 +35,7 @@ yarn install
 3. Build the Tailwind CSS:
 
 ```
-yarn build
+yarn build:css
 ```
 
 4. Set up environment variables:
@@ -43,7 +43,7 @@ yarn build
 Create .env.development and .env.production files based on the provided sample:
 
 ```
-.env.development
+# .env.development
 NODE_ENV=development
 MONGO_INITDB_ROOT_USERNAME=system_admin
 MONGO_INITDB_ROOT_PASSWORD=9MFY3dKBfQc6d
@@ -51,7 +51,7 @@ MONGO_DATABASE=dev
 ```
 
 ```
-.env.production
+# .env.production
 NODE_ENV=production
 MONGO_INITDB_ROOT_USERNAME=system_admin
 MONGO_INITDB_ROOT_PASSWORD=9MFY3dKBfQc6d
