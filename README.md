@@ -92,7 +92,7 @@ yarn docker:down
 Build and start the backend container:
 
 ```
-yarn backend
+yarn backend:start
 ```
 
 Start the database container:
