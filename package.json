@@ -1,0 +1,44 @@
+{
+  "name": "login-system",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "start": "NODE_ENV=production ts-node src/index.ts",
+    "build": "tsc",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "backend:build": "docker build -f backend/Dockerfile -t backend-app .",
+    "backend:start": "docker run -d -p 3000:3000 --name backend-app backend-app",
+    "backend:stop": "docker stop backend-app && docker rm backend-app",
+    "database:start": "docker-compose -f database/docker-compose.yml up -d",
+    "database:stop": "docker-compose -f database/docker-compose.yml down",
+    "build:css": "tailwindcss build src/public/tailwind.css -o src/public/tailwind-built.css"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^4.17.21",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^20.14.2",
+    "@types/pug": "^2.0.10",
+    "autoprefixer": "^10.4.19",
+    "bcrypt": "^5.1.1",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "mongoose": "^8.4.1",
+    "postcss": "^8.4.38",
+    "pug": "^3.0.3",
+    "tailwindcss": "^3.4.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "@types/express-session": "^1.18.0",
+    "dotenv": "^16.4.5",
+    "nodemon": "^3.1.3"
+  }
+}

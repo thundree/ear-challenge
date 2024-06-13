@@ -1,0 +1,21 @@
+services:
+  mongo-db:
+    image: mongo:latest
+    container_name: mongo_container
+    restart: on-failure
+    networks:
+      - mongo_network
+    ports:
+      - 27017:27017
+    env_file:
+      - ../.env.production
+    volumes:
+      - mongo-data:/data/db
+
+networks:
+  mongo_network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local
