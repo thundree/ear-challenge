@@ -4,7 +4,7 @@
   "main": "index.ts",
   "license": "MIT",
   "scripts": {
-    "build:css": "tailwindcss build src/public/tailwind.css -o src/public/tailwind-built.css",
+    "build:css": "tailwindcss build -i src/public/tailwind.css -o src/public/tailwind-built.css",
     "dev": "yarn build:css && nodemon --exec ts-node src/index.ts",
     "start": "NODE_ENV=production ts-node src/index.ts",
     "build": "yarn build:css && tsc",
