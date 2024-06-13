@@ -150,6 +150,24 @@ ear-challenge/
 - `/my-account` - User dashboard (protected)
 - `/logout` - Logout route
 
+## preview
+
+### Home
+
+![Home Screenshot](images/home.jpg)
+
+### Login
+
+![Login Screenshot](images/login.jpg)
+
+### Register
+
+![Register Screenshot](images/register.jpg)
+
+### Dashboard
+
+![Dashboard Screenshot](images/account.jpg)
+
 ## Middleware
 
 - `express-session` - For session management

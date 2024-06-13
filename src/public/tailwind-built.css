@@ -795,3 +795,9 @@ video {
     display: inline;
   }
 }
+
+@media (min-width: 768px) {
+  .md\:p-0 {
+    padding: 0px;
+  }
+}
