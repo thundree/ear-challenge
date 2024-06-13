@@ -13,16 +13,16 @@ A simple login system built with Node.js, Express, Pug, MongoDB, and Tailwind CS
 ## Prerequisites
 
 - Node.js >= 18
-- Docker (optional for backend, mandatory for the mongodb server)
+- Docker (optional for backend, mandatory for the mongodb server\*)
 
-_Otherwise you'll need to provide a server URI_
+_\* Otherwise you'll need to provide a mongodb server URI manually_
 
 ## Installation
 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/ear-challenge.git
+git clone https://github.com/thundree/ear-challenge.git
 cd ear-challenge
 ```
 
@@ -32,13 +32,7 @@ cd ear-challenge
 yarn install
 ```
 
-3. Build the Tailwind CSS:
-
-```
-yarn build:css
-```
-
-4. Set up environment variables:
+3. Set up environment variables:
 
 Create .env.development or .env.production files based on the provided sample:
 
@@ -56,6 +50,12 @@ NODE_ENV=production
 MONGO_INITDB_ROOT_USERNAME=system_admin
 MONGO_INITDB_ROOT_PASSWORD=9MFY3dKBfQc6d
 MONGO_DATABASE=prod
+```
+
+4. Build the Tailwind CSS if you updated the project layout/pages:
+
+```
+yarn build:css
 ```
 
 ## Running the Application
@@ -101,6 +101,14 @@ Start the database container:
 yarn database:start
 ```
 
+## Testing / Validating
+
+Access
+
+```
+http://localhost:3000/
+```
+
 ## Project Structure
 
 ```
@@ -136,18 +144,17 @@ ear-challenge/
 
 ## Routes
 
-```
-/ - Home page with links to login and register
-/login - Login page
-/register - Registration page
-/my-account - User account page (protected route)
-/logout - Logout route
-```
+- `/` - Home page with links to login and register
+- `/login` - Login page
+- `/register` - Registration page
+- `/my-account` - User dashboard (protected)
+- `/logout` - Logout route
 
 ## Middleware
 
-express-session - For session management
-bcrypt - For password hashing
-License
+- `express-session` - For session management
+- `bcrypt` - For password hashing
+
+### License
 
 _This project is licensed under the MIT License._
