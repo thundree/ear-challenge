@@ -9,7 +9,14 @@ import { mongoOptions, mongoUri } from "./config";
 type RequestAuth = Request & {
   session: SessionData & {
     sessionId?: number | string;
+    successMessage?: string;
   };
+};
+
+// Função para validar email
+const validateEmail = (email: string) => {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(String(email).toLowerCase());
 };
 
 // Conectar ao MongoDB
@@ -50,8 +57,10 @@ app.get("/", (_req: Request, res: Response) => {
 });
 
 // Rota básica para o login
-app.get("/login", (_req: Request, res: Response) => {
-  res.render("login");
+app.get("/login", (req: RequestAuth, res: Response) => {
+  const successMessage = req.session.successMessage;
+  req.session.successMessage = undefined; // Clear the message after displaying
+  res.render("login", { error: null, successMessage });
 });
 
 // Rota para processar o login
@@ -60,20 +69,29 @@ app.post("/login", async (req: RequestAuth, res: Response) => {
 
   // Validação básica
   if (!username || !password) {
-    return res.status(400).send("All fields are required");
+    return res.render("login", {
+      error: "All fields are required",
+      successMessage: null,
+    });
   }
 
   try {
     // Buscar o usuário no banco de dados
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(401).send("Incorrect username or password");
+      return res.render("login", {
+        error: "Incorrect username or password",
+        successMessage: null,
+      });
     }
 
     // Verificar a senha
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).send("Incorrect username or password");
+      return res.render("login", {
+        error: "Incorrect username or password",
+        successMessage: null,
+      });
     }
 
     // Salvar usuário na sessão
@@ -83,22 +101,30 @@ app.post("/login", async (req: RequestAuth, res: Response) => {
     res.redirect("/my-account");
   } catch (error) {
     console.error(error);
-    res.status(500).send("Server error");
+    res.render("login", {
+      error: "Server error. Please try again later.",
+      successMessage: null,
+    });
   }
 });
 
-// Rota para a página de cadastro
+// Rota para a página de registro
 app.get("/register", (_req: Request, res: Response) => {
-  res.render("register");
+  res.render("register", { error: null });
 });
 
-// Rota para processar o cadastro
-app.post("/register", async (req: Request, res: Response) => {
+// Rota para processar o registro
+app.post("/register", async (req: RequestAuth, res: Response) => {
   const { username, password } = req.body;
 
   // Validação básica
   if (!username || !password) {
-    return res.status(400).send("All fields are required");
+    return res.render("register", { error: "All fields are required" });
+  }
+
+  // Validar email
+  if (!validateEmail(username)) {
+    return res.render("register", { error: "Invalid email address" });
   }
 
   try {
@@ -109,11 +135,18 @@ app.post("/register", async (req: Request, res: Response) => {
     const newUser = new User({ username, password: hashedPassword });
     await newUser.save();
 
+    // Definir mensagem de sucesso na sessão
+    req.session.successMessage = "Account created successfully. Please log in.";
+
     // Redirecionar para a página de login
     res.redirect("/login");
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
-    res.status(500).send("Server error");
+    if (error.code === 11000) {
+      return res.render("register", { error: "Email is already registered" });
+    }
+
+    res.render("register", { error: "Server error. Please try again later." });
   }
 });
 

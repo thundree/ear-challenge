@@ -3,10 +3,17 @@ extends layout
 block content
   div(class="flex flex-col items-center justify-center min-h-screen bg-gray-100")
     h1(class="text-4xl font-bold mb-6") Login
+    if successMessage
+      div(class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative mb-4")
+        span(class="block sm:inline") #{successMessage}
+    if error
+      div(class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4")
+        span(class="block sm:inline") #{error}
     form(action="/login" method="POST" class="w-full max-w-sm bg-white p-6 rounded shadow-md")
       div(class="mb-4")
-        label(for="username" class="block text-gray-700") E-mail:
-        input(type="text" name="username" required class="w-full p-2 border border-gray-300 rounded mt-2")
+        label(for="username" class="block text-gray-700") Username/email:
+        input(type="text" name="username" id="username" required class="w-full p-2 border border-gray-300 rounded mt-2")
+        span(id="emailError" class="text-red-700 text-sm hidden") Invalid email address
       div(class="mb-4")
         label(for="password" class="block text-gray-700") Password:
         input(type="password" name="password" required class="w-full p-2 border border-gray-300 rounded mt-2")
@@ -14,3 +21,20 @@ block content
         button(type="submit" class="px-4 py-2 bg-blue-500 text-white rounded") Login
     div(class="mt-4")
       a(href="/" class="text-blue-500 underline") Back to Home
+
+  script.
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(String(email).toLowerCase());
+    }
+
+    function validateForm() {
+      const email = document.getElementById('username').value;
+      const emailError = document.getElementById('emailError');
+      if (!validateEmail(email)) {
+        emailError.classList.remove('hidden');
+        return false;
+      }
+      emailError.classList.add('hidden');
+      return true;
+    }

@@ -4,17 +4,17 @@
   "main": "index.ts",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --exec ts-node src/index.ts",
+    "build:css": "tailwindcss build src/public/tailwind.css -o src/public/tailwind-built.css",
+    "dev": "yarn build:css && nodemon --exec ts-node src/index.ts",
     "start": "NODE_ENV=production ts-node src/index.ts",
-    "build": "tsc",
-    "docker:up": "docker-compose up -d",
+    "build": "yarn build:css && tsc",
+    "docker:up": "yarn build:css && docker-compose up -d",
     "docker:down": "docker-compose down",
     "backend:build": "docker build -f backend/Dockerfile -t backend-app .",
     "backend:start": "docker run -d -p 3000:3000 --name backend-app backend-app",
     "backend:stop": "docker stop backend-app && docker rm backend-app",
     "database:start": "docker-compose -f database/docker-compose.yml up -d",
-    "database:stop": "docker-compose -f database/docker-compose.yml down",
-    "build:css": "tailwindcss build src/public/tailwind.css -o src/public/tailwind-built.css"
+    "database:stop": "docker-compose -f database/docker-compose.yml down"
   },
   "engines": {
     "node": ">=18"

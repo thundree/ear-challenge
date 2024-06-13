@@ -1,7 +1,22 @@
 extends layout
 
 block content
-  div(class="flex flex-col items-center justify-center min-h-screen bg-gray-100")
-    h1(class="text-4xl font-bold mb-6") My Account
-    p(class="text-lg mb-4") Welcome, #{username}!
-    a(href="/logout" class="px-4 py-2 bg-red-500 text-white rounded") Logout
+  div(class="min-h-screen bg-gray-100 flex flex-col")
+    nav(class="bg-blue-600 p-4 text-white flex justify-between items-center")
+      div(class="text-2xl font-bold") My Dashboard
+      div
+        a(href="/logout" class="bg-red-500 px-4 py-2 rounded") Logout
+    main(class="flex flex-grow p-4")
+      aside(class="w-1/8 min-w-[220px] bg-white rounded shadow-md p-4")
+        ul
+          li(class="mb-4")
+            a(href="#" class="text-blue-600 hover:underline") Profile
+          li(class="mb-4")
+            a(href="#" class="text-blue-600 hover:underline") Settings
+          li(class="mb-4")
+            a(href="#" class="text-blue-600 hover:underline") Messages
+      section(class="flex-grow bg-white rounded shadow-md p-4 ml-4")
+        h1(class="text-4xl font-bold mb-6") My Account
+        p(class="text-lg mb-4") Welcome, #{username}!
+        div(class="mt-4")
+          a(href="#" class="bg-green-500 text-white px-4 py-2 rounded") Edit Profile
