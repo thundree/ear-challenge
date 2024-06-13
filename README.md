@@ -40,7 +40,7 @@ yarn build:css
 
 4. Set up environment variables:
 
-Create .env.development and .env.production files based on the provided sample:
+Create .env.development or .env.production files based on the provided sample:
 
 ```
 # .env.development
@@ -71,10 +71,23 @@ yarn dev
 Start the production server:
 
 ```
+yarn build
 yarn start
 ```
 
 ### Using Docker
+
+Start both containers in production:
+
+```
+yarn docker:up
+```
+
+Stop both containers:
+
+```
+yarn docker:down
+```
 
 Build and start the backend container:
 
@@ -86,12 +99,6 @@ Start the database container:
 
 ```
 yarn database:start
-```
-
-Stop the containers:
-
-```
-yarn docker:down
 ```
 
 ## Project Structure
